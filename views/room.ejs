@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Room</title>
+    <script>
+      const ROOM_ID = "<%= roomId %>"
+   </script>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+   <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="/socket.io/socket.io.js" defer></script>
+   <link rel="stylesheet" href="style.css">
+   <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+   <script src="script.js" defer></script>
+    
+</head>
+<body>
+    
+   <div class = "app-header-bar is-in-call">
+      <div class = "in-call-bar-container">
+          <div class = "in-call-bar">
+              <div class = "in-call-search-bar-outer">
+                  <form role = "search">
+                      <span class = "search-icon"> 
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                      </span>
+                      <input class = "in-call-search-bar-input">
+
+                  </form>
+              </div>
+          </div>
+      </div>
+      <div class = "in-call-profile">
+          <div class = "in-call-setting-container">
+              <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          </div>
+          <div class = "in-call-profile-container">
+              <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+      </div>
+  </div>
+
+  <div class = "main">
+      <div class = "app-bar-v-container">
+         <div class="app-bar-v">
+            <ul class = "app-bar-items">
+               <li>
+                     <button class = "app-bar-button">
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                     </button> 
+               </li>
+               <li>
+                     <button class = "app-bar-button">
+                        <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                     </button> 
+               </li>
+               <li>
+                     <button class = "app-bar-button">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                     </button> 
+               </li>
+               <li role = "presentation" class = "spacer"></li>
+               <li>
+                     <button class = "app-bar-button">
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                     </button> 
+               </li>
+               <li>
+                     <button class = "app-bar-button">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+
+                     </button> 
+               </li>
+            </ul>
+         </div>
+
+   </div>
+
+        
+      <div class="main__videos">
+
+            <div id="video-grid">  </div>
+
+            <div class="main__controls">
+               <div class="main__controls__button">
+                  <i class="fas fa-video-slash"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-microphone"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-microphone"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-ellipsis-h"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-hand-spock"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-comment-dots"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-users"></i>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-phone-slash"></i>
+               </div>
+               
+               <!-- <div onclick="playStop()" class="main__controls__button " >
+                  <i class="fas fa-video"></i>
+                  <span>Stop Video</span>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-shield-alt"></i>
+                  <span>Security</span>
+               </div>
+               <div class="main__controls__button">
+                  <i class="fas fa-user-friends"></i>
+                  <span>Participants</span>
+               </div>
+               <div class="main__controls__button"></div>
+                  <i class="fas fa-comment-alt"></i>
+                  <span>Chat</span>
+               </div>
+               <div class="main__controls__button">
+                  <span class="leave_meeting">Leave Meeting</span>
+               </div> -->
+            </div>
+
+
+      </div>
+  </div>
+
+</body>
+
+</html>
