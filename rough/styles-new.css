@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+/* Header Properties  */
+header {
+    display: flex;
+    width: 100%;
+    height: 3.5rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5% 30px 20%; 
+    background-color: #24252a;
+  }
+
+
+/* Search Bar properties */
+.search-bar{
+    display: flex;
+    flex: .6;
+    align-items: center;
+    background-color: #2f3640;
+    border-radius: 10%;
+    padding: .4rem;
+}
+
+.inner-search-bar{
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    transition: 0.4s;
+    flex: 1;
+    font-size: medium;
+}
+
+
+.search-button{
+    color: oldlace;
+    border-radius: 50%;
+}
+
+/* User icon and more options header part */
+.right-half-header{
+    display: flex;
+    flex: .5;
+    align-items: center;
+    justify-content: flex-end;
+    /* background: red; */
+}
+.right-half-header a{
+    padding-left: 2rem;
+    color: whitesmoke;
+}
+
+.right-half-header a:hover{
+    color:#a6a7dc;
+}
+
+.right-half-header a i{
+    font-size: 20px;
+    
+}
+
+
+.main-container{
+    display: flex;
+    background: red;
+    margin: 0;
+    padding: 0;
+}
+
+/* SideBar Properties */
+
+.side-bar-container{
+    background: #0a0a0a;
+    position: relative;
+
+}
+
+.inner-side-bar{
+    flex: 1;
+    overflow: hidden;
+    opacity: .4;
+    width: 3.5rem;
+    transition: .25s;
+
+}
+
+.inner-side-bar:hover{
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .25s;
+}
+
+.side-bar-items{
+    list-style: none;
+    height: calc(100vh - 3.5rem);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    -webkit-font-smoothing: antialiased;
+
+
+}
+
+
+.side-bar-button{
+    width: 100%;
+    display: block;
+    font-size: 1.2rem;
+    height: 5.6rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: visible;
+    border-color:transparent;
+    border-radius: 2px;
+    align-items: flex-start;
+    margin: 0;
+    color: white;
+    background-color: transparent;
+}
+
+.side-bar-button:hover{
+    background-color: #1f1f1f;
+    color: #a6a7dc
+}
+.side-bar-button:focus {
+    
+
+    outline: none;
+    
+}
+    
+
+.spacer{
+    flex: 1;
+}
+
+/* Video Screen Region */
+
+.video-container{
+    flex: 1;
+    position: relative;
+    background:blue;
+    /* mention the justify content property */
+}
+
+
+
+
+
+/* @media only screen and (max-width: 800px) {
+    .nav__links,
+    .cta {
+      display: none;
+    }
+    .menu {
+      display: initial;
+    }
+  } */
+
+
+/*  
+  .logo {
+    cursor: pointer;
+  }
+  
+  .nav__links a,
+  .cta,
+  .overlay__content a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #edf0f1;
+    text-decoration: none;
+  }
+  
+  .nav__links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav__links li {
+    padding: 0px 20px;
+  }
+  
+  .nav__links li a {
+    transition: color 0.3s ease 0s;
+  }
+  
+  .nav__links li a:hover {
+    color: #0088a9;
+  }
+  
+  .cta {
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease 0s;
+  } */
+  
+  /* .cta:hover {
+    background-color: rgba(0, 136, 169, 0.8);
+  } */
+  
+  /* Mobile Nav */
+  
+  /* .menu {
+    display: none;
+  }
+  
+  .overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: #24252a;
+    overflow-x: hidden;
+    transition: width 0.5s ease 0s;
+  }
+  
+  .overlay--active {
+    width: 100%;
+  }
+  
+  .overlay__content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .overlay a {
+    padding: 15px;
+    font-size: 36px;
+    display: block;
+    transition: color 0.3s ease 0s;
+  }
+  
+  .overlay a:hover,
+  .overlay a:focus {
+    color: #0088a9;
+  }
+  .overlay .close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    color: #edf0f1;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .overlay a {
+      font-size: 20px;
+    }
+    .overlay .close {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+    }
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .nav__links,
+    .cta {
+      display: none;
+    }
+    .menu {
+      display: initial;
+    }
+  }
+   */

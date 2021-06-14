@@ -26,22 +26,10 @@ navigator.mediaDevices.getUserMedia({
   socket.on('user-connected', userId => {
     connectToNewUser(userId, stream)
   })
-  // input value
-  let text = $("input");
-  // when press enter send message
-  $('html').keydown(function (e) {
-    if (e.which == 13 && text.val().length !== 0) {
-      socket.emit('message', text.val());
-      text.val('')
-    }
-  });
-  socket.on("createMessage", message => {
-    $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
-    scrollToBottom()
-  })
-})
+  
 
 socket.on('user-disconnected', userId => {
+  console.log("oeoeoeoeo")
   if (peers[userId]) peers[userId].close()
 })
 
@@ -68,8 +56,38 @@ function addVideoStream(video, stream) {
     video.play()
   })
   videoGrid.append(video)
+
+  // RESIZING
+  const height = document.querySelector('.main__videos').offsetHeight
+  const width = document.queryCommandEnabled('.main__videos').offSetWidth;
+  console.log(height);
+
 }
 
+
+
+
+
+
+
+
+
+
+// chat 
+// input value
+let text = $("input");
+// when press enter send message
+$('html').keydown(function (e) {
+  if (e.which == 13 && text.val().length !== 0) {
+    socket.emit('message', text.val());
+    text.val('')
+  }
+});
+socket.on("createMessage", message => {
+  $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
+  scrollToBottom()
+})
+})
 
 
 const scrollToBottom = () => {
@@ -78,16 +96,7 @@ const scrollToBottom = () => {
 }
 
 
-const muteUnmute = () => {
-  const enabled = myVideoStream.getAudioTracks()[0].enabled;
-  if (enabled) {
-    myVideoStream.getAudioTracks()[0].enabled = false;
-    setUnmuteButton();
-  } else {
-    setMuteButton();
-    myVideoStream.getAudioTracks()[0].enabled = true;
-  }
-}
+//  PLAY STOP VIDEO
 
 const playStop = () => {
   console.log('object')
@@ -101,26 +110,9 @@ const playStop = () => {
   }
 }
 
-const setMuteButton = () => {
-  const html = `
-    <i class="fas fa-microphone"></i>
-    <span>Mute</span>
-  `
-  document.querySelector('.main__mute_button').innerHTML = html;
-}
-
-const setUnmuteButton = () => {
-  const html = `
-    <i class="unmute fas fa-microphone-slash"></i>
-    <span>Unmute</span>
-  `
-  document.querySelector('.main__mute_button').innerHTML = html;
-}
-
 const setStopVideo = () => {
   const html = `
     <i class="fas fa-video"></i>
-    <span>Stop Video</span>
   `
   document.querySelector('.main__video_button').innerHTML = html;
 }
@@ -128,7 +120,43 @@ const setStopVideo = () => {
 const setPlayVideo = () => {
   const html = `
   <i class="stop fas fa-video-slash"></i>
-    <span>Play Video</span>
   `
   document.querySelector('.main__video_button').innerHTML = html;
+}
+
+
+// MUTE UNMUTE
+
+const muteUnmute = () => {
+  const enabled = myVideoStream.getAudioTracks()[0].enabled;
+  if (enabled) {
+    myVideoStream.getAudioTracks()[0].enabled = false;
+    setUnmuteButton();
+  } else {
+    setMuteButton();
+    myVideoStream.getAudioTracks()[0].enabled = true;
+  }
+}
+
+
+
+const setMuteButton = () => {
+  const html = `
+    <i class="fas fa-microphone"></i>
+  `
+  document.querySelector('.main__mute_button').innerHTML = html;
+}
+
+const setUnmuteButton = () => {
+  const html = `
+    <i class="unmute fas fa-microphone-slash"></i>
+  `
+  document.querySelector('.main__mute_button').innerHTML = html;
+}
+
+
+// LEAVE CALL
+const leaveCall = () => {
+  console.log('here');
+  socket.emit('end-call-server');
 }
