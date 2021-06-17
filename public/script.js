@@ -13,7 +13,7 @@ myVideo.muted = true
 const peers = {}
 
 // When the peer server returns an ID, or the client connects to the peer server
-myPeer.on('open', id => {
+myPeer.on('open', id => { 
   console.log("User Connected with peer network", id)
   socket.emit('join-room', ROOM_ID, id)
 })
@@ -27,8 +27,13 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
   socket.on('user-connected', userId => {
     //  The client will connect to the new user that has joined
     // We will send to the  userID our video stream, with whom we wish to connect
-    console.log("user connected "  + userId)
-    setTimeout(connectToNewUser(userId, stream), 10000);
+    // console.log("user connected "  + userId)  
+    // setTimeout(function(){
+    //   connectToNewUser(userId, stream)}
+    //   , 100);
+    // one issue is that call does not get accepted if the reciving tab is not active
+    connectToNewUser(userId, stream);
+    console.log("user connected "  + userId)  
   })
 
   myPeer.on('call', call => { // listen to when someone tries to call us
@@ -50,7 +55,7 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
   
 })
 
-socket.on('user-disconnected', userId => {
+socket.on('user-disconnected', userId => { // whenever a user disconnect forcefully 
   console.log("User " + userId + " left");
   if (peers[userId]){
     console.log("Removing user  " + userId );
@@ -154,5 +159,5 @@ const setUnmuteButton = () => {
 // LEAVE CALL
 const leaveCall = () => {
   console.log('here');
-  socket.emit('end-call-server');
+  socket.emit('user-disconnected');
 }

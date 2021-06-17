@@ -14,11 +14,12 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   // Create a brand new room and redirect the user there
-  res.redirect(`/${uuidV4()}`)
+  res.redirect(`/video-chat?roomId=${uuidV4()}`);
 })
 
-app.get('/:room', (req, res) => {
-  res.render('room', { roomId: req.params.room })
+app.get('/video-chat', (req, res) => {
+  console.log(req.query);
+  res.render('room', { roomId: req.query })
 })
 
 // Everytime someone connects to the server
