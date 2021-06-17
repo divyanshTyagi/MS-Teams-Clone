@@ -28,7 +28,7 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
     //  The client will connect to the new user that has joined
     // We will send to the  userID our video stream, with whom we wish to connect
     console.log("user connected "  + userId)
-    connectToNewUser(userId, stream)
+    setTimeout(connectToNewUser(userId, stream), 10000);
   })
 
   myPeer.on('call', call => { // listen to when someone tries to call us
@@ -75,7 +75,7 @@ function connectToNewUser(userId, stream) {
     console.log("HERE");
     video.remove()
   })
-
+  
   
 }
 
