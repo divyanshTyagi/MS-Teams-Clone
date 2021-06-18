@@ -33,6 +33,12 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.broadcast.to(roomId).emit('user-connected', userId);
 
+    // Messagin functionality
+    socket.on('message-sent', (message) => {
+      //send message to the same room
+      io.to(roomId).emit('append-message', message)
+    }); 
+
 
     socket.on('disconnect', () => {
       console.log("Disconnected");

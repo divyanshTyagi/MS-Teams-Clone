@@ -218,6 +218,26 @@ video{
     display: flex;
     flex: .3;
     position: relative;
-    background-color: red;
+    background-color: rgba(226, 218, 218, 0.877);
+    flex-direction: column;
 
+}
+
+.chatbox-header{
+    width:100%;
+}
+
+.chatbox-text{
+    flex: 1;
+    overflow-y: auto;
+
+}
+
+.chatbox-input{  /* Container for input and icon */
+    display: flex;
+}
+
+.chatbox-input-text {
+    display: flex;
+    flex-grow: 1;
 }
