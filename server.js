@@ -3,7 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
-
+var random_name = require('random-name') // used for generating random names
 
 
 // Setting up rendering method of rooms
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.get('/video-chat', (req, res) => {
   console.log(req.query);
-  res.render('room', { roomId: req.query })
+  res.render('room', { roomId: req.query.roomId ,userName : random_name.first()});
 })
 
 // Everytime someone connects to the server
@@ -34,9 +34,10 @@ io.on('connection', socket => {
     socket.broadcast.to(roomId).emit('user-connected', userId);
 
     // Messagin functionality
-    socket.on('message-sent', (message) => {
+    socket.on('message-sent', (res) => {
+      console.log(res.userName);
       //send message to the same room
-      io.to(roomId).emit('append-message', message)
+      io.to(roomId).emit('append-message', {'userName' : res.userName, 'message' : res.messageContent});
     }); 
 
 

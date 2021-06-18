@@ -238,20 +238,22 @@ const toggleChat = () => {
 
 // SEND CHAT MESSAGE
 function sendMessage(event){
-  console.log(event.keycode);
   if(event.keyCode == 13){
     
-    let messageContent = document.querySelector('#chatbox-input-text').value;
+    let messageContent = document.querySelector('#chatbox-input-text').value.trim();
+    if(messageContent.length == 0) {
+        return;
+    }
     document.querySelector('#chatbox-input-text').value = '';
-    socket.emit('message-sent',messageContent);
+    socket.emit('message-sent',{'userName' : USER_NAME,'messageContent' : messageContent});
   }
   
 }
 
 // APPEND CHAT MESSAGE
-socket.on('append-message',message => {
+socket.on('append-message',(res) => {
   let messageInstance = document.createElement('li')
-  messageInstance.innerHTML = message;
+  messageInstance.innerHTML = res.userName + " : "  + res.message;
   document.getElementById('messages').append(messageInstance);
   // scrollToBottom()
 });
