@@ -253,12 +253,19 @@ function sendMessage(event){
 // APPEND CHAT MESSAGE
 socket.on('append-message',(res) => {
   let messageInstance = document.createElement('li')
-  messageInstance.innerHTML = res.userName + " : "  + res.message;
+  let userNamePart = document.createElement('p');
+  userNamePart.className = 'userNamePartChat'
+  userNamePart.innerHTML = res.userName;
+  let userTextPart = document.createElement('p');
+  userTextPart.className = 'userTextPartChat';
+  userTextPart.innerHTML = ': ' + res.message;
+  messageInstance.append(userNamePart);
+  messageInstance.append(userTextPart);
   document.getElementById('messages').append(messageInstance);
-  // scrollToBottom()
+  scrollToBottom()
 });
 
-// const scrollToBottom = () => {
-//   var d = $('.chatbox-text');
-//   d.scrollTop(d.prop("scrollHeight"));
-// }
+const scrollToBottom = () => {
+  var d = $('.chatbox-text');
+  d.scrollTop(d.prop("scrollHeight"));
+}

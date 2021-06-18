@@ -239,10 +239,32 @@ video{
 }
 
 .chatbox-text{
+    display: flex;
     flex: 1;
-    overflow-y: auto;
+    overflow-wrap: break-word;
+    overflow-y:auto;
+}
+
+.chatbox-text p{
+    padding-left: .3rem;
+    font-size: medium;
+}
+
+.chatbox-text li:last-child{
+    margin-bottom:2px;
 
 }
+.userNamePartChat{
+
+    color: rgb(175, 134, 230);
+    display: inline;
+}
+
+.userTextPartChat{
+    
+    display: inline;
+}
+
 
 .chatbox-input{  /* Container for input and icon */
     display: flex;
