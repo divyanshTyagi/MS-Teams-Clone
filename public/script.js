@@ -237,9 +237,15 @@ const toggleChat = () => {
 }
 
 // SEND CHAT MESSAGE
-const sendMessage = () => {
-  let messageContent = document.querySelector('#chatbox-input-text').value;
-  socket.emit('message-sent',messageContent);
+function sendMessage(event){
+  console.log(event.keycode);
+  if(event.keyCode == 13){
+    
+    let messageContent = document.querySelector('#chatbox-input-text').value;
+    document.querySelector('#chatbox-input-text').value = '';
+    socket.emit('message-sent',messageContent);
+  }
+  
 }
 
 // APPEND CHAT MESSAGE
