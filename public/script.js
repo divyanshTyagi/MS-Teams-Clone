@@ -73,7 +73,17 @@ socket.on('user-disconnected', userId => { // whenever a user disconnect forcefu
   }
 })
 
-function resizeVideoStreams(videoGridHeight,videoGridWidth){
+function resizeVideoStreams(){
+
+  $('#video-grid').children('video').each(function () {
+    this.style.display = 'none';
+  });  
+
+  // for resizing after closing
+  videoGridHeight =  $("#video-grid").height();
+  videoGridWidth =  $("#video-grid").width(); 
+
+  console.log(videoGridWidth,videoGridHeight);
   //resizing the window
   let totalVideoElements =0 ;
   // Iterating through all the children in the div
@@ -93,6 +103,11 @@ function resizeVideoStreams(videoGridHeight,videoGridWidth){
     // alert(this.value); // "this" is the current element in the loop
   });  
 
+  $('#video-grid').children('video').each(function () {
+    this.style.display = 'flex';
+  });  
+
+
 
 }
 
@@ -111,7 +126,7 @@ function connectToNewUser(userId, stream) {
     videoGridWidth =  $("#video-grid").width(); 
   
     video.remove();
-    resizeVideoStreams(videoGridHeight, videoGridWidth);
+    resizeVideoStreams();
   })
   
   
@@ -135,7 +150,7 @@ function addVideoStream(video, stream) {
  
   videoGrid.append(video)
   
-  resizeVideoStreams(videoGridHeight, videoGridWidth);
+  resizeVideoStreams();
   // reference commands to find heights
 
   // $("#myDiv").height();
@@ -147,7 +162,7 @@ function addVideoStream(video, stream) {
 
 }
 
-
+window.onresize = resizeVideoStreams;
 
 //  PLAY STOP VIDEO
 
@@ -212,4 +227,16 @@ const setUnmuteButton = () => {
 const leaveCall = () => {
   console.log('here');
   socket.emit('user-disconnected');
+}
+
+
+// TOGGLE Chat
+const toggleChat = () => {
+  let chatBox = document.getElementsByClassName('chatbox')[0]
+  if(chatBox.style.display == 'none'){
+    chatBox.style.display = 'flex';
+  }else {
+    chatBox.style.display = 'none';
+  }
+  resizeVideoStreams();
 }

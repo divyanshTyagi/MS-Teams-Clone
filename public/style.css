@@ -209,3 +209,15 @@ video{
 
 
 
+
+
+/* CHAT BOX */
+
+.chatbox {
+    transition: all 10s ease;
+    display: flex;
+    flex: .3;
+    position: relative;
+    background-color: red;
+
+}
