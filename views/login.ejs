@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <link rel="stylesheet" href="/login.css">
+   <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="/login.js" defer></script> 
+</head>
+<body>
+    
+    <div class="login_container">
+        <form action="/login" method="POST" >
+            <div class = "login_email">
+                <div class = "logo">
+                    <img src="./assets/microsoft_logo_7lyNn7YkjJOP0NwZNw6QvQ2.svg" >
+                </div>
+                <h3> Login </h3>   
+                <input type="text" placeholder="someone@example.com" id = "login_email" name = "email">
+                <input type="password" placeholder = "Password" id = "login_password" name = "password">
+                <p class = "alert">
+                <% if (messages.error) { %>
+                    <%= messages.error %>
+                  <% } %>
+                </p>
+                <div class = "login_email_footer" style = "display: flex;justify-content:space-between">
+                    <button type = "submit" onClick = "submitForm()">Submit</button>
+                </div>
+                <p style = "margin-top:15px;color:black;"> Not Registered ? <a href = "/signup" style = "color:rgb(103, 210, 243)">Signup</a></p>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
