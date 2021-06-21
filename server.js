@@ -52,6 +52,7 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
 app.get('/', checkAuthenticated, (req, res) => {
+  console.log(req);
   res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name })
 })
 
@@ -162,8 +163,8 @@ function checkNotAuthenticated(req, res, next) {
 
 
 app.get('/video-chat', checkAuthenticated, (req, res) => {
-  console.log(req.query);
-  res.render('room', { roomId: req.query.roomId ,userName : random_name.first()});
+  console.log(req);
+  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
 })
 
 // Everytime someone connects to the server
