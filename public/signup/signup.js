@@ -44,6 +44,7 @@ const signup_pt1 = () => {
 
 
 const submitForm = () => {
+
     document.querySelector('form').submit;
 }
 
