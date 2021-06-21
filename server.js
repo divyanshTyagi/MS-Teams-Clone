@@ -43,7 +43,7 @@ app.use(passport.session());
 app.use(methodOverride('_method'))
 
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('index', { name: req.user.name })
+  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name })
 })
 
 
@@ -58,8 +58,6 @@ app.post('/login', checkNotAuthenticated,passport.authenticate('local', {
   failureFlash: true
 }))
 
-
-
 app.get('/signup', checkNotAuthenticated, (req, res) => {
   res.render('signup')
 })
@@ -70,7 +68,8 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password1, 10)
     users.push({
       id: Date.now().toString(),
-      name: req.body.name,
+      first_name: req.body.first_name,
+      last_name : req.body.last_name,
       email: req.body.email,
       password: hashedPassword
     })
@@ -103,63 +102,61 @@ function checkNotAuthenticated(req, res, next) {
 
 
 
-app.listen(3030)
-
 // app.get('/meeting-control',(req, res) => {
 //   res.render('meeting-control');
 // })
 
-// // app.get('/', (req, res) => {
-// //   // Create a brand new room and redirect the user there
-// //   res.redirect(`/video-chat?roomId=${uuidV4()}`);
-// // })
-
-
-
-
-// app.get('/video-chat', (req, res) => {
-//   console.log(req.query);
-//   res.render('room', { roomId: req.query.roomId ,userName : random_name.first()});
+// app.get('/', (req, res) => {
+//   // Create a brand new room and redirect the user there
+//   res.redirect(`/video-chat?roomId=${uuidV4()}`);
 // })
 
-// // Everytime someone connects to the server
-// io.on('connection', socket => {
-//   console.log("connected");
-//   // When someone joins the room
-//   socket.on('join-room', (roomId, userId) => {
-//     console.log("User joined " + roomId)
-//     console.log("With user id " + userId)
-//     // Joining the room with the current user
-//     socket.join(roomId)
-//     socket.broadcast.to(roomId).emit('user-connected', userId);
-
-//     // Messagin functionality
-//     socket.on('message-sent', (res) => {
-//       console.log(res.userName);
-//       //send message to the same room
-//       io.to(roomId).emit('append-message', {'userName' : res.userName, 'message' : res.messageContent});
-//     }); 
-
-
-//     socket.on('disconnect', () => {
-//       console.log("Disconnected");
-//       socket.to(roomId).emit('user-disconnected', userId)
-//     })
-
-    
-    
-
-//   }); 
 
 
 
-//   // Create new meeting url
-//   socket.on('create-meeting-url',()=>{
-//     console.log("here");
-//     socket.emit('new-meeting-url-created',uuidV4());
-//   })
+app.get('/video-chat', checkAuthenticated, (req, res) => {
+  console.log(req.query);
+  res.render('room', { roomId: req.query.roomId ,userName : random_name.first()});
+})
+
+// Everytime someone connects to the server
+io.on('connection', socket => {
+  console.log("connected");
+  // When someone joins the room
+  socket.on('join-room', (roomId, userId) => {
+    console.log("User joined " + roomId)
+    console.log("With user id " + userId)
+    // Joining the room with the current user
+    socket.join(roomId)
+    socket.broadcast.to(roomId).emit('user-connected', userId);
+
+    // Messagin functionality
+    socket.on('message-sent', (res) => {
+      console.log(res.userName);
+      //send message to the same room
+      io.to(roomId).emit('append-message', {'userName' : res.userName, 'message' : res.messageContent});
+    }); 
+
+
+    socket.on('disconnect', () => {
+      console.log("Disconnected");
+      socket.to(roomId).emit('user-disconnected', userId)
+    })
 
     
-// })
+    
 
-// server.listen(process.env.PORT||3030)
+  }); 
+
+
+
+  // Create new meeting url
+  socket.on('create-meeting-url',()=>{
+    console.log("here");
+    socket.emit('new-meeting-url-created',uuidV4());
+  })
+
+    
+})
+
+server.listen(process.env.PORT||3030)
