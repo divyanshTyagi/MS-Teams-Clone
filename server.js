@@ -1,3 +1,5 @@
+// for development
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
@@ -9,26 +11,28 @@ const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const mongoose = require('mongoose');
+// Database
+const {User} = require('./models/userModel.js');
 
-// for development
-require('dotenv').config()
 
 
 // Setting up rendering method of rooms
 app.set('view engine', 'ejs')
+
+const initializePassport = require("./passport-config.js");
+
+initializePassport(passport);
+
+
 // Setting the static folder
 app.use(express.static('public'))
 
-const initializePassport = require('./passport-config')
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
-)
+
+// Authentication 
 
 
 
-const users = []
 
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
@@ -42,6 +46,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'))
 
+dbname = "ms-teams";
+url = 'mongodb://localhost:27017/' + dbname;
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set("useCreateIndex", true);
+
 app.get('/', checkAuthenticated, (req, res) => {
   res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name })
 })
@@ -52,7 +61,7 @@ app.get('/login', checkNotAuthenticated,(req, res) => {
   res.render('login')
 })
 
-app.post('/login', checkNotAuthenticated,passport.authenticate('local', {
+app.post('/login', checkNotAuthenticated,passport.authenticate('users', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true
@@ -64,19 +73,57 @@ app.get('/signup', checkNotAuthenticated, (req, res) => {
 
 app.post('/signup', checkNotAuthenticated, async (req, res) => {
   console.log(req.body);
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password1, 10)
-    users.push({
-      id: Date.now().toString(),
-      first_name: req.body.first_name,
-      last_name : req.body.last_name,
-      email: req.body.email,
-      password: hashedPassword
-    })
-    res.redirect('/login')
-  } catch {
-    res.redirect('/signup')
-  }
+  
+  user = {
+    "first_name": req.body.first_name,
+    "last_name": req.body.last_name,
+    "email": req.body.email,
+    "password": req.body.password1
+}
+  
+  User.findOne({email: req.email}, function(err, userFound){
+    if (err)
+    {
+        error = "Error Occured In The Database";
+        console.log(err);
+        return res.render("signup", {error});
+    }
+    else if (userFound)
+    {
+        error = "Email Already Used, Please Use Another Email";
+        return res.render("signup", {error});
+    }
+    else
+    {
+        bcrypt.hash(req.body.password1, 12, function(err1, hash){
+            if (err1)
+            {
+                error = "Error Occured In The Database";
+                console.log(err1);
+                return res.render("signup");
+            }
+            else
+            {
+                newUser = new User(user);
+                newUser.password = hash;
+                newUser.save(function(err2){
+                    if (err2)
+                    {
+                        
+                        error = "Error Occured In The Database";
+                        console.log(err2);
+                        return res.render("signup");
+                    }
+                    else
+                    {
+                        success = "Signed In Successful Please Login To Continue";
+                        return res.render("login");
+                    }
+                });
+            }
+        });
+    }
+});
 })
 
 app.delete('/logout', (req, res) => {
