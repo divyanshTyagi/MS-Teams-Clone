@@ -51,9 +51,10 @@ url = 'mongodb://localhost:27017/' + dbname;
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
+
 app.get('/', checkAuthenticated, (req, res) => {
   console.log(req);
-  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name })
+  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email})
 })
 
 
@@ -127,6 +128,27 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 });
 })
 
+
+app.post('/edit_details',(req,res) => {
+  // we need to find the hashed password
+  console.log(req);
+  bcrypt.hash(req.body.password1, 12, function(err1, hash){
+    if (err1)
+    {
+        error = "Error Occured In The Database";
+        console.log(err1);
+        return res.render("/");
+    }
+    else
+    {
+      User.findOneAndUpdate({ email: req.user.email }, { first_name :  req.body.first_name,last_name : req.body.last_name,password : hash}).then((err, result) => {
+        req.logOut();
+        res.redirect("/");
+    });
+    }
+  });
+})
+
 app.delete('/logout', (req, res) => {
   req.logOut()
   res.redirect('/login')
@@ -196,7 +218,20 @@ io.on('connection', socket => {
 
   }); 
 
+  // find friends functionality
+  socket.on('find_friend', (res) => {
+    console.log("oeoeoeoe");
+    console.log(res.friend_email);
+    User.findOne({email :  res.friend_email}).then((user) => {
+      
+      if(user== null){
+         socket.emit('found_friend',{status:false});
+      }else socket.emit('found_friend',{status:true});
 
+
+    });
+    
+  })
 
   // Create new meeting url
   socket.on('create-meeting-url',()=>{
