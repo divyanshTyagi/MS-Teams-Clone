@@ -82,7 +82,7 @@
         
         <div class="main__controls">
            <div class="main__controls__button main__video_button" onClick = "playStop()">
-              <i class="fas fa-video-slash"></i>
+              <i class="fas fa-video"></i>
            </div>
            <div class="main__controls__button main__mute_button" onClick="muteUnmute()">
               <i class="fas fa-microphone"></i>
@@ -108,41 +108,38 @@
 
       </div>
       
-       <!-- Chat Box Window -->
+       
+      
 
-
-       <div class = "chatbox" style = "display: none;">
-                <div class="chatbox-header">
-                    <h2>Meeting Chat</h2>
-                    <hr>
-                </div>
-                <div class="chatbox-text">
-                    <ul id="messages" style = "height:100px">
-                
-                    </ul>
-                </div>
-                <div class="chatbox-input">
-                    <input id = "chatbox-input-text" type="text" onkeypress="sendMessage(event)" placeholder="Type a new message">
-                </div>
-
+    <div class = "right_side_bar" style = "display:none;">
+        <!-- Chat Box Window -->
+        <div class = "chatbox" style = "display: none;">
+            <div class="chatbox-header">
+                <h2>Meeting Chat</h2>
+                <hr>
+            </div>
+            <div class="chatbox-text">
+                <ul id="messages" style = "height:100px">
+            
+                </ul>
+            </div>
+            <div class="chatbox-input">
+                <input id = "chatbox-input-text" type="text" onkeypress="sendMessage(event)" placeholder="Type a new message">
+            </div>
         </div>
-
-
         <!-- Participants Window -->
-       <div class = "participant" style = "display: none;">
-        <div class="participant-header">
-            <h2>Participants</h2>
-            <hr>
-        </div>
-        <div class="chatbox-text">
-            <ul id="participants-text" style = "height:100px">
-                
-            </ul>
+        <div class = "participant" style = "display: none;">
+            <div class="participant-header">
+                <h2>Participants</h2>
+                <hr>
+            </div>
+            <div class="participant-text">
+                <ul id="participant-text" style = "height:100px">
+                    
+                </ul>
+            </div>
         </div>
     </div>
-
-
-
    </div>
 
    

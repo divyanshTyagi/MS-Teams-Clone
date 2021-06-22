@@ -16,6 +16,7 @@ const peers = {}
 myPeer.on('open', id => { 
   console.log("User Connected with peer network", id)
   socket.emit('join-room', ROOM_ID, id)
+  addParticipants(id); // add ourselved to the participants
 })
 
 navigator.mediaDevices.getUserMedia({ // This is a promise
@@ -28,6 +29,10 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
     //  The client will connect to the new user that has joined
     // We will send to the  userID our video stream, with whom we wish to connect
     connectToNewUser(userId, stream);
+    
+    // add the user to the list of participant
+    addParticipants(userId);
+    
     console.log("user connected "  + userId)  
   })
 
@@ -39,6 +44,8 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
     call.on('stream', userVideoStream => {   // recieve the stream from the calling user
       addVideoStream(video, userVideoStream)
       peers[call.peer] = call;
+      // Add the user to tha participants listen
+      addParticipants(call.peer)
     })
 
     call.on('close', () => { // when someone leaves the video call
@@ -46,7 +53,7 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
         // for resizing after closing
         videoGridHeight =  $("#video-grid").height();
         videoGridWidth =  $("#video-grid").width(); 
-      
+
         video.remove();
         resizeVideoStreams(videoGridHeight, videoGridWidth);
 
@@ -65,6 +72,8 @@ socket.on('user-disconnected', userId => { // whenever a user disconnect forcefu
     peers[userId].close() // this will either call the myPeer.on('call' ) -> call.on('close), or connectToNewUser -> call.on('close');
     delete peers[userId]
     console.log( peers);
+    // remove the user from the participant list
+    removeParticipants(userId);
   }
 })
 
@@ -225,12 +234,26 @@ const leaveCall = () => {
 }
 
 
+// right side bar 
+const toggleOffAll = ()=> {
+  const children = document.querySelector('.right_side_bar').children;
+  for (var i = 0; i < children.length; i++) {
+      children[i].style.display = 'none';
+    }
+    document.querySelector('.right_side_bar').style.display = 'none';
+}
+
+
 // TOGGLE Chat
 const toggleChat = () => {
+
   let chatBox = document.getElementsByClassName('chatbox')[0]
   if(chatBox.style.display == 'none'){
+    toggleOffAll();
+    document.querySelector('.right_side_bar').style.display = 'flex';
     chatBox.style.display = 'flex';
   }else {
+    toggleOffAll();
     chatBox.style.display = 'none';
   }
   resizeVideoStreams();
@@ -273,13 +296,32 @@ const scrollToBottom = () => {
 
 // Participants
 
-// TOGGLE Chat
+// TOGGLE Participants
 const toggleParticipants = () => {
+  
+  
   let participant = document.getElementsByClassName('participant')[0]
   if(participant.style.display == 'none'){
+    toggleOffAll();
+    document.querySelector('.right_side_bar').style.display = 'flex';
     participant.style.display = 'flex';
   }else {
+    toggleOffAll();
     participant.style.display = 'none';
   }
   resizeVideoStreams();
+}
+// add to list
+const addParticipants = (id) => {
+  participant = document.createElement('li')
+  participant.innerHTML = `<p>${id}</p>`;
+  document.getElementById('participant-text').append(participant);
+}
+
+// remove participant
+const removeParticipants = (id) => {
+  const allParticipant = document.getElementById('participant-text').children;
+  for(var i =0 ; i < allParticipant.length ; i++){
+    if(allParticipant[i].innerHTML == `<p>${id}</p>`) allParticipant[i].remove();
+  }
 }

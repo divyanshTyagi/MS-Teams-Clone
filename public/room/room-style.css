@@ -209,14 +209,16 @@ video{
 
 
 
-
+.right_side_bar{
+    display: flex;
+    flex: .3;   
+}
 
 /* CHAT BOX */
 
 .chatbox {
-    transition: all 10s ease;
     display: flex;
-    flex: .3;
+    flex: 1;
     position: relative;
     background-color: #f5f5f5;
     flex-direction: column;
@@ -295,9 +297,8 @@ video{
 /* Participants */
 
 .participant {
-    transition: all 10s ease;
     display: flex;
-    flex: .3;
+    flex: 1;
     position: relative;
     background-color: #f5f5f5;
     flex-direction: column;
