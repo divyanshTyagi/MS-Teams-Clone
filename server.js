@@ -171,15 +171,10 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 
-
-// app.get('/meeting-control',(req, res) => {
-//   res.render('meeting-control');
-// })
-
-// app.get('/', (req, res) => {
-//   // Create a brand new room and redirect the user there
-//   res.redirect(`/video-chat?roomId=${uuidV4()}`);
-// })
+app.post('/video-chat', (req, res) => {
+  // Create a brand new room and redirect the user there
+  res.redirect(`/video-chat?roomId=${uuidV4()}`);
+})
 
 
 
