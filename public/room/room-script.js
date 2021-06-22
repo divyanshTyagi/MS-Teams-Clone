@@ -269,3 +269,17 @@ const scrollToBottom = () => {
   var d = $('.chatbox-text');
   d.scrollTop(d.prop("scrollHeight"));
 }
+
+
+// Participants
+
+// TOGGLE Chat
+const toggleParticipants = () => {
+  let participant = document.getElementsByClassName('participant')[0]
+  if(participant.style.display == 'none'){
+    participant.style.display = 'flex';
+  }else {
+    participant.style.display = 'none';
+  }
+  resizeVideoStreams();
+}

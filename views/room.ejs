@@ -88,9 +88,6 @@
               <i class="fas fa-microphone"></i>
            </div>
            <div class="main__controls__button">
-              <i class="fas fa-microphone"></i>
-           </div>
-           <div class="main__controls__button">
               <i class="fas fa-ellipsis-h"></i>
            </div>
            <div class="main__controls__button">
@@ -99,7 +96,7 @@
            <div class="main__controls__button" onClick="toggleChat()">
               <i class="fas fa-comment-dots"></i>
            </div>
-           <div class="main__controls__button">
+           <div class="main__controls__button" onClick="toggleParticipants()">
               <i class="fas fa-users"></i>
            </div>
            <div class="main__controls__button" onClick="leaveCall()">
@@ -112,21 +109,38 @@
       </div>
       
        <!-- Chat Box Window -->
+
+
        <div class = "chatbox" style = "display: none;">
-            <div class="chatbox-header">
-                <h2>Meeting Chat</h2>
-                <hr>
-            </div>
-            <div class="chatbox-text">
-                <ul id="messages" style = "height:100px">
-               
-                </ul>
-            </div>
-            <div class="chatbox-input">
-                <input id = "chatbox-input-text" type="text" onkeypress="sendMessage(event)" placeholder="Type a new message">
-            </div>
+                <div class="chatbox-header">
+                    <h2>Meeting Chat</h2>
+                    <hr>
+                </div>
+                <div class="chatbox-text">
+                    <ul id="messages" style = "height:100px">
+                
+                    </ul>
+                </div>
+                <div class="chatbox-input">
+                    <input id = "chatbox-input-text" type="text" onkeypress="sendMessage(event)" placeholder="Type a new message">
+                </div>
 
         </div>
+
+
+        <!-- Participants Window -->
+       <div class = "participant" style = "display: none;">
+        <div class="participant-header">
+            <h2>Participants</h2>
+            <hr>
+        </div>
+        <div class="chatbox-text">
+            <ul id="participants-text" style = "height:100px">
+                
+            </ul>
+        </div>
+    </div>
+
 
 
    </div>
