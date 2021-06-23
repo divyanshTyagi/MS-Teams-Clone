@@ -72,6 +72,7 @@ header {
     background: #1b1a1a;
     margin: 0;
     padding: 0;
+    height:calc(100vh - 3.5rem);
 }
 
 /* SideBar Properties */

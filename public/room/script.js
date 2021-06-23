@@ -38,7 +38,6 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
 
   myPeer.on('call', call => { // listen to when someone tries to call us
     console.log("Call recieved");
-    console.log(call);
     call.answer(stream) // answer the call, give the calling user our stream
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {   // recieve the stream from the calling user
@@ -71,7 +70,6 @@ socket.on('user-disconnected', userId => { // whenever a user disconnect forcefu
     console.log("Removing user  " + userId );
     peers[userId].close() // this will either call the myPeer.on('call' ) -> call.on('close), or connectToNewUser -> call.on('close');
     delete peers[userId]
-    console.log( peers);
     // remove the user from the participant list
     removeParticipants(userId);
   }
@@ -87,7 +85,6 @@ function resizeVideoStreams(){
   videoGridHeight =  $("#video-grid").height();
   videoGridWidth =  $("#video-grid").width(); 
 
-  console.log(videoGridWidth,videoGridHeight);
   //resizing the window
   let totalVideoElements =0 ;
   // Iterating through all the children in the div
@@ -95,7 +92,6 @@ function resizeVideoStreams(){
     totalVideoElements += 1;
     // alert(this.value); // "this" is the current element in the loop
   });  
-  console.log(totalVideoElements);
 
   let videoDimensions = [videoGridHeight,videoGridWidth/(totalVideoElements)];
 
@@ -149,8 +145,7 @@ function addVideoStream(video, stream) {
   videoGridHeight =  $("#video-grid").height();
   videoGridWidth =  $("#video-grid").width(); 
 
-  console.log(videoGridWidth);
-  console.log(videoGridWidth);
+
  
   videoGrid.append(video)
   
@@ -171,7 +166,6 @@ window.onresize = resizeVideoStreams;
 //  PLAY STOP VIDEO
 
 const playStop = () => {
-  console.log('object')
   let enabled = myVideoStream.getVideoTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
@@ -229,7 +223,6 @@ const setUnmuteButton = () => {
 
 // LEAVE CALL
 const leaveCall = () => {
-  console.log('here');
   socket.emit('user-disconnected');
 }
 

@@ -14,7 +14,7 @@ const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 // Database
 const {User} = require('./models/userModel.js');
-
+const {RoomDetails} = require('./models/roomDetails.js');
 
 
 // Setting up rendering method of rooms
@@ -53,7 +53,6 @@ mongoose.set("useCreateIndex", true);
 
 
 app.get('/', checkAuthenticated, (req, res) => {
-  console.log(req);
   res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email})
 })
 
@@ -74,7 +73,6 @@ app.get('/signup', checkNotAuthenticated, (req, res) => {
 })
 
 app.post('/signup', checkNotAuthenticated, async (req, res) => {
-  console.log(req.body);
   
   user = {
     "first_name": req.body.first_name,
@@ -131,7 +129,6 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 
 app.post('/edit_details',(req,res) => {
   // we need to find the hashed password
-  console.log(req);
   bcrypt.hash(req.body.password1, 12, function(err1, hash){
     if (err1)
     {
@@ -180,8 +177,50 @@ app.post('/video-chat', (req, res) => {
 
 
 app.get('/video-chat', checkAuthenticated, (req, res) => {
-  console.log(req);
+  // add the user to the list of users
+  // RoomDetails.findOne({roomId: req.query.roomId}, function(err, room){
+  //   if(err){
+  //     console.log(err);
+  //     return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
+  //   }else{
+  //     if(room == null){
+  //         // we will find that user
+  //         User.findOne({email : req.user.email}, function(err, user){
+  //             console.log(user);
+  //             currRoomDetails = {
+  //               "roomId" : req.query.roomId,
+  //               "participants" : [user]
+  //             }
+  //             newRoomDetails = new RoomDetails(currRoomDetails);
+  //             console.log(newRoomDetails);
+  //             newRoomDetails.save(function(err2){
+  //                 if(err2){
+  //                   console.log("Error at saving room details");
+  //                   console.log(err2);
+  //                   return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
+  //                 }
+  //                 return res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
+  //             })
+  //         })
+  //       }else{
+  //         User.findOne({email : req.user.email}, function(err, user){
+  //           console.log(user);
+  //           RoomDetails.findOneAndUpdate({roomId: req.query.roomId},{ $addToSet: { participants: [user] } },function(err,roomDetails){
+  //             if(err){
+  //               console.log("Error on adding new user to already existing room")
+  //               return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
+  //             }else{
+  //               return res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
+  //             }
+  //           })
+  //         })
+  //       }
+  //   }
+  // })
+
   res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
+
+
 })
 
 // Everytime someone connects to the server
@@ -215,7 +254,6 @@ io.on('connection', socket => {
 
   // find friends functionality
   socket.on('find_friend', (res) => {
-    console.log("oeoeoeoe");
     console.log(res.friend_email);
     User.findOne({email :  res.friend_email}).then((user) => {
       

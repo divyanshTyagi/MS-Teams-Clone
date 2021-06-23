@@ -21,7 +21,6 @@ const signup_pt2 = () => {
         document.querySelector('.alert').innerHTML = "Empty password";
         return ;
     }
-    console.log(password1, password2);
     if(password1 != password2) {
         // SHOW ERROR
         document.querySelector('.alert').innerHTML = "Passwords do not match";
