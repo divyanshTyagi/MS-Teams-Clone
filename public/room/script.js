@@ -357,11 +357,18 @@ const removeParticipants = (id) => {
 
 
 // HAND RAISE
-$(document).ready(function() {
-  $("#success-alert").hide();
-  $("#myWish").click(function showAlert() {
-    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-      $("#success-alert").slideUp(500);
-    });
-  });
-});
+
+const raiseHand = () =>{
+  socket.emit('hand-raise',myPeer.id);
+  socket.on("hand-raise",userId=>{
+    console.log("here");
+    $("#success-alert").hide();
+      document.getElementById("success-alert").innerHTML = `${peerUsernameMap[userId]} raised hand`;
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+          $("#success-alert").slideUp(500);
+      });
+  })
+}
+
+
+

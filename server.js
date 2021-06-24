@@ -252,6 +252,12 @@ io.on('connection', socket => {
     })    
     
 
+    socket.on('hand-raise',(userId) => {
+      io.to(roomId).emit('hand-raise', userId);
+      
+    })
+
+
   }); 
 
 
