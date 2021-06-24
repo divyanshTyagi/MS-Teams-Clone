@@ -17,10 +17,13 @@
    <link rel="stylesheet" href="/room/style.css">
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
    <script src="/room/script.js" defer></script>
-    
+   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
+
     
+
+
    <header>
       <div class="search-bar">
           <input class = "inner-search-bar" type = "text" name = "" placeholder="Search">
@@ -40,42 +43,18 @@
   </header>
 
   <div class="main-container">
-      <!-- Side Bar -->
-      <!-- <div class = "side-bar-container">
-          <div class="inner-side-bar">
-          <ul class = "side-bar-items">
-              <li>
-                  <button class = "side-bar-button">
-                  <i class="fa fa-bell-o" aria-hidden="true"></i>
-                  </button> 
-              </li>
-              <li>
-                  <button class = "side-bar-button">
-                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
-                  </button> 
-              </li>
-              <li>
-                  <button class = "side-bar-button">
-                  <i class="fa fa-calendar" aria-hidden="true"></i>
-                  </button> 
-              </li>
-              <li role = "presentation" class = "spacer"></li>
-              <li>
-                  <button class = "side-bar-button">
-                  <i class="fa fa-question-circle" aria-hidden="true"></i>
-                  </button> 
-              </li>
-              <li>
-                  <button class = "side-bar-button">
-                  <i class="fa fa-download" aria-hidden="true"></i>
-                  </button> 
-              </li>
-          </ul>
-          </div>
-      </div> -->
+              <!-- Video screen region -->
 
-            <!-- Video screen region -->
+
+
       <div class="video-container">
+
+        <div class = "notifications" style = "float: right;">
+            <div class="alert alert-success" id="success-alert" style = "position:absolute; top : 4px; right: 4px">
+                    Hi, How are you!
+            </div>
+        </div>
+
         <div id="video-grid">
 
         </div>
@@ -142,10 +121,5 @@
     </div>
    </div>
 
-   
-
-
-
 </body>
-
 </html>

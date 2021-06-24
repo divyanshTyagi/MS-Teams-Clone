@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 // Database
 const {User} = require('./models/userModel.js');
 const {RoomDetails} = require('./models/roomDetails.js');
-
+const {PeerId} = require('./models/peerId.js');
 
 // Setting up rendering method of rooms
 app.set('view engine', 'ejs')
@@ -227,12 +227,12 @@ app.get('/video-chat', checkAuthenticated, (req, res) => {
 io.on('connection', socket => {
   console.log("connected");
   // When someone joins the room
-  socket.on('join-room', (roomId, userId) => {
+  socket.on('join-room', (roomId, userId,userName) => {
     console.log("User joined " + roomId)
     console.log("With user id " + userId)
     // Joining the room with the current user
     socket.join(roomId)
-    socket.broadcast.to(roomId).emit('user-connected', userId);
+    socket.broadcast.to(roomId).emit('user-connected', userId,userName );
 
     // Messagin functionality
     socket.on('message-sent', (res) => {
@@ -241,16 +241,20 @@ io.on('connection', socket => {
       io.to(roomId).emit('append-message', {'userName' : res.userName, 'message' : res.messageContent});
     }); 
 
-
     socket.on('disconnect', () => {
       console.log("Disconnected");
       socket.to(roomId).emit('user-disconnected', userId)
     })
 
-    
+    socket.on('add-calling-user',(res)=>{
+      console.log("heeloo");
+      io.emit('add-calling-user', res);
+    })    
     
 
   }); 
+
+
 
   // find friends functionality
   socket.on('find_friend', (res) => {
@@ -272,7 +276,33 @@ io.on('connection', socket => {
     socket.emit('new-meeting-url-created',uuidV4());
   })
 
-    
+  // USERNAMES 
+
+  socket.on('store_peer_id',(id,userName)=>{
+    console.log("STORING")
+    console.log(id, userName);
+    peerInfo = {
+      "userName" : userName,
+      "peerId" : id
+    }
+    peerInfoObj = new PeerId(peerInfo);
+    peerInfoObj.save(function(err2){
+      if(err2){
+        console.log(err2);
+      }
+    })
+  })
+
+  socket.on('get-user-name',(id) => {
+    console.log("get user name called for ", id );
+    PeerId.findOne({peerId : id}).then(userDetails=>{
+      console.log(userDetails);
+      socket.emit('take-user-name',userDetails.userName);
+
+    })
+
+  })
+
 })
 
 server.listen(process.env.PORT||3030)
