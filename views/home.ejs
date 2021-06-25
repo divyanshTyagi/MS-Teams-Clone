@@ -63,56 +63,23 @@
 
 
 
-      <!-- Modal Edit Details-->
-  <div class="modal fade" id="add_friend_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Add Friend</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type = "text" id = "friend_email_input" Placeholder = "Enter friends email Id"> 
-          <h6  style = "color:red" id = "edit_details_form_error">
-
-            
-          </h6>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="addFriend()">Add Friend</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
-
-
-
-
-
-
-  <div class = "main_container_left" >
+  <div class = "main_container">
     <div class = "profile_img">
         <img src = "./assets/userImage.jpg" >
 
     </div>
     <div class = "details">
       <div class = "show_details">
-        <p class = "real_name"> <%= first_name + " "  + last_name %> </p>
-        <p class = "user_name"> <%= email %> </p>
+        <p class = "real_name" style = "color:#e2e1e1"> <%= first_name + " "  + last_name %> </p>
+        <p class = "user_name" style = "color:#e2e1e1"> <%= email %> </p>
       </div>
 
       <div class = "options_left">
           <!-- Button trigger modal -->
           <button type="button"  data-toggle="modal" data-target="#edit_details_form_modal">
             Edit details
-          </button>
-          <button type="button"  data-toggle="modal" data-target="#add_friend_modal">
-            Add Friend
           </button>
           <form action="/video-chat" method="POST">
             <button type="submit">New meeting</button>
@@ -122,70 +89,6 @@
           </form>
           
       </div>
-      
-    </div>
-    
-
-  </div>
-
-  <div class = "main_container_right" >
-    <div class = "friends_list_container">
-      <div class = "friend_row_header">
-        <p> Friends</p>
-      </div>
-      <div class = "friend_list">
-        <div class = "friend_row">
-          <div class = "friend_name">
-            <p>
-              Tanvee 
-            </p>
-          </div>
-          <div class = "call_friend">
-            <button type = "button" > Call </button>
-          </div>
-        </div>
-        <div class = "friend_row">
-          <div class = "friend_name">
-            <p>
-              Shivam 
-            </p>
-          </div>
-          <div class = "call_friend">
-            <button type = "button" > Call </button>
-          </div>
-        </div>
-        <div class = "friend_row">
-          <div class = "friend_name">
-            <p>
-              Yukti 
-            </p>
-          </div>
-          <div class = "call_friend">
-            <button type = "button" > Call </button>
-          </div>
-        </div>
-        <div class = "friend_row">
-          <div class = "friend_name">
-            <p>
-              Abhimanyu 
-            </p>
-          </div>
-          <div class = "call_friend">
-            <button type = "button" > Call </button>
-          </div>
-        </div>
-        <div class = "friend_row">
-          <div class = "friend_name">
-            <p>
-              Anand 
-            </p>
-          </div>
-          <div class = "call_friend">
-            <button type = "button" > Call </button>
-          </div>
-        </div>
-      </div>
-    
     </div>
   </div>
 </div>

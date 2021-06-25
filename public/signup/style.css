@@ -4,7 +4,11 @@
 body {
     margin: 0;
     padding: 0;
-    background: #2b5876; /*fallback for old browsers*/
+    background: #2b2223;
+}
+
+form{
+    color: white;
 }
 
 .signup_container{
@@ -24,7 +28,8 @@ body {
     border-width:2px;
     border-color: #4c7591;
 
-    box-shadow: 5px 10px #35749d;
+    background-color: #24191c;
+    box-shadow: 0px 10px 10px 0px black;
 
 }
 
@@ -40,6 +45,9 @@ body {
     line-height:2rem;
     width: 100%;
     transition:all 2 ease;
+    color: white;
+    padding: 5px;
+    background-color: #43282866;
 }
 .signup_container input:last-child{
     margin: 0 0 0 0 ;
@@ -70,7 +78,7 @@ body {
 }
 
 .signup_container p{
-    color:red;
+    color:#FF7597;
 }
 
 .alert{

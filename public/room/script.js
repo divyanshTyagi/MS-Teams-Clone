@@ -38,12 +38,6 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
   })
 
   myPeer.on('call', call => { // listen to when someone tries to call us
-    
-
-
-
-
-    
     console.log("Call recieved");
     console.log(call);
     call.answer(stream) // answer the call, give the calling user our stream

@@ -1,4 +1,4 @@
- -- make code structure properly
- -- participants list updated via database userNames stored 
+ -- make code structure properly ( done )
+ -- participants list updated via database userNames stored  ( issue )
  -- improve front end of controls bar
  -- implement raise hand fucntionality
