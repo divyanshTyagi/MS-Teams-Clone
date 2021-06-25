@@ -21,7 +21,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 30px 5% 30px 20%; 
-    background-color: #24252a;
+    background-color: #513b41;
   }
 
 
@@ -30,10 +30,12 @@ header {
     display: flex;
     flex: .6;
     align-items: center;
-    background-color: #2f3640;
+    background-color: #43282866;;
     border-radius: 10%;
     padding: .4rem;
+    border: 2px solid #593b3b;
 }
+    
 
 .inner-search-bar{
     border: none;
@@ -76,10 +78,10 @@ header {
 
 .main-container{
     display: flex;
-    background: #1b1a1a;
     margin: 0;
     padding: 0;
     height:calc(100vh - 3.5rem);
+    background-color: #3e2f2f;
 }
 
 /* SideBar Properties */
@@ -244,7 +246,7 @@ video{
     font-size: 1.5rem;
     padding-top: 1.2rem;
     padding-left: .3rem;
-    
+    color: #5E454C
 
 }
 
@@ -257,7 +259,7 @@ video{
 
 .chatbox-text p{
     padding-left: .3rem;
-    font-size: medium;
+    font-size: large;
 }
 
 .chatbox-text li:last-child{
@@ -266,7 +268,7 @@ video{
 }
 .userNamePartChat{
 
-    color: rgb(175, 134, 230);
+    color: #9E737F;
     display: inline;
 }
 
@@ -324,7 +326,7 @@ video{
     font-size: 1.5rem;
     padding-top: 1.2rem;
     padding-left: .3rem;
-    
+    color: #5E454C;
 
 }
 
@@ -333,6 +335,7 @@ video{
     flex: 1;
     overflow-wrap: break-word;
     overflow-y:auto;
+    width: 100%;
 }
 
 .participant-text p{
@@ -343,8 +346,14 @@ video{
 .participant-text li:last-child{
     margin-bottom:2px;
 
+
 }
 
+.participant-text li p{
+    color: #9E737F;
+    font-size: 20px;
+    font-weight: bold;
+}
 
 
 /* Hand Raise */
