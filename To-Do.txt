@@ -1,4 +1,5 @@
  -- make code structure properly ( done )
- -- participants list updated via database userNames stored  ( issue )
+ -- participants list updated via database userNames stored  ( issue, done using socket )
  -- improve front end of controls bar
- -- implement raise hand fucntionality
+ -- implement raise hand fucntionality ( done )
+ -- imporve profile page 

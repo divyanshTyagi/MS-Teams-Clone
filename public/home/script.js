@@ -1,12 +1,11 @@
 const socket = io('/');
 
 const submitEditDetailsForm = () => {
-    const first_name = document.querySelector('#first_name').value;
-    const last_name = document.querySelector('#last_name').value;
     const password1 = document.querySelector('#password1').value;
     const password2 = document.querySelector('#password2').value; 
-    if(first_name.length == 0 || last_name.length == 0 || password1.length == 0 || (password1 != password2)){
-        document.querySelector('#edit_details_form_error').innerHTML = "Enter Details Properly"
+    if( password1.length == 0 || (password1 != password2)){
+        console.log(password1,password2);
+        document.querySelector('#edit_details_form_error').innerHTML = "Passwords are empty or dont match !"
         return;
     }
     document.querySelector('#edit_details_form_error').innerHTML = ""
@@ -26,3 +25,26 @@ const addFriend = () => {
     })
 
 }
+
+
+// For profile image upadtions
+$("#profileImage").click(function(e) {
+    $("#imageUpload").click();
+});
+
+function previewProfileImage( uploader ) {   
+    //ensure a file was selected 
+    if (uploader.files && uploader.files[0]) {
+        var imageFile = uploader.files[0];
+        var reader = new FileReader();    
+        reader.onload = function (e) {
+            //set the image data as source
+            $('#profileImage').attr('src', e.target.result);
+        }    
+        reader.readAsDataURL( imageFile );
+    }
+}
+
+$("#imageUpload").change(function(){
+    previewProfileImage( this );
+});

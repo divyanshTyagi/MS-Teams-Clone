@@ -138,7 +138,14 @@ app.post('/edit_details',(req,res) => {
     }
     else
     {
-      User.findOneAndUpdate({ email: req.user.email }, { first_name :  req.body.first_name,last_name : req.body.last_name,password : hash}).then((err, result) => {
+      new_first_name = req.user.first_name;
+      if(req.body.first_name.length != 0) new_first_name = req.body.first_name;
+      new_last_name = req.user.last_name;
+      if(req.body.last_name.length != 0) new_last_name = req.body.last_name;
+
+      if(req.body.password1.length ==0 ) hash = req.user.password;  
+
+      User.findOneAndUpdate({ email: req.user.email }, { first_name :  new_first_name,last_name : new_last_name,password : hash}).then((err, result) => {
         req.logOut();
         res.redirect("/");
     });
