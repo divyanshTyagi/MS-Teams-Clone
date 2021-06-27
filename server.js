@@ -1,22 +1,22 @@
 // for development
 require('dotenv').config()
+const path = require('path')
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
-var random_name = require('random-name') // used for generating random names
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const mongoose = require('mongoose');
+var fs = require('fs');
 // Database
 const {User} = require('./models/userModel.js');
 const {RoomDetails} = require('./models/roomDetails.js');
 const {PeerId} = require('./models/peerId.js');
-
 // Setting up rendering method of rooms
 app.set('view engine', 'ejs')
 
@@ -28,6 +28,22 @@ initializePassport(passport);
 // Setting the static folder
 app.use(express.static('public'))
 
+
+// setting up multer for image storage
+var multer = require('multer');
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname,'/public/', '/uploads/'))
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname + '-' + Date.now() + '.png')
+    }
+});
+ 
+var upload = multer({ 
+  storage: storage
+});
 
 // Authentication 
 
@@ -50,10 +66,10 @@ dbname = "ms-teams";
 url = 'mongodb://localhost:27017/' + dbname;
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
-
+  
 
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email})
+  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email,image : req.user.img})
 })
 
 
@@ -78,7 +94,7 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
     "first_name": req.body.first_name,
     "last_name": req.body.last_name,
     "email": req.body.email,
-    "password": req.body.password1
+    "password": req.body.password1, 
 }
   
   User.findOne({email: req.email}, function(err, userFound){
@@ -104,6 +120,7 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
             }
             else
             {
+                user["img"] = "default_profile.png";
                 newUser = new User(user);
                 newUser.password = hash;
                 newUser.save(function(err2){
@@ -127,7 +144,8 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 })
 
 
-app.post('/edit_details',(req,res) => {
+app.post('/edit_details',upload.single('profile_photo'),(req,res) => {
+
   // we need to find the hashed password
   bcrypt.hash(req.body.password1, 12, function(err1, hash){
     if (err1)
@@ -142,13 +160,14 @@ app.post('/edit_details',(req,res) => {
       if(req.body.first_name.length != 0) new_first_name = req.body.first_name;
       new_last_name = req.user.last_name;
       if(req.body.last_name.length != 0) new_last_name = req.body.last_name;
-
       if(req.body.password1.length ==0 ) hash = req.user.password;  
-
-      User.findOneAndUpdate({ email: req.user.email }, { first_name :  new_first_name,last_name : new_last_name,password : hash}).then((err, result) => {
+      new_img_path = req.user.img
+      if(req.file!=null) new_img_path = req.file.filename;
+      console.log(req.file);
+      User.findOneAndUpdate({ email: req.user.email }, { first_name :  new_first_name,last_name : new_last_name,password : hash,img : new_img_path}).then((err, result) => {
         req.logOut();
         res.redirect("/");
-    });
+      });
     }
   });
 })

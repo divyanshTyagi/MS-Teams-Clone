@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     online: {
         type: Boolean, 
         default: false
-    }
+    },
+    img: String
 });
 
 const User = new mongoose.model("User", userSchema);

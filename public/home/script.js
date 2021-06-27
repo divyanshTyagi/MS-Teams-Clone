@@ -3,7 +3,7 @@ const socket = io('/');
 const submitEditDetailsForm = () => {
     const password1 = document.querySelector('#password1').value;
     const password2 = document.querySelector('#password2').value; 
-    if( password1.length == 0 || (password1 != password2)){
+    if( password1.length != 0 && (password1 != password2)){
         console.log(password1,password2);
         document.querySelector('#edit_details_form_error').innerHTML = "Passwords are empty or dont match !"
         return;

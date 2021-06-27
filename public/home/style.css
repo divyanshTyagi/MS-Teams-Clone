@@ -110,3 +110,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e94ca1",endCo
     width: 400px;
     height: 400px;
 }
+
+#profile-image-container img{
+height: 400px;
+width: 400px;
+border-radius: 50%;
+object-fit: cover;
+}
