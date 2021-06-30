@@ -2,4 +2,5 @@
  -- participants list updated via database userNames stored  ( issue, done using socket )
  -- improve front end of controls bar
  -- implement raise hand fucntionality ( done )
- -- imporve profile page 
+ -- imporve profile page (done)
+ -- make meet joining page 

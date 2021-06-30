@@ -194,6 +194,10 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 
+app.get('/join-room', (req, res) => {
+  res.render('join-room')
+})
+
 app.post('/video-chat', (req, res) => {
   // Create a brand new room and redirect the user there
   res.redirect(`/video-chat?roomId=${uuidV4()}`);

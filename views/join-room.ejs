@@ -9,17 +9,40 @@
    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
    <script src="/socket.io/socket.io.js" defer></script>
-   <link rel="stylesheet" href="/meeting-room-style.css">
+   <link rel="stylesheet" href="/join-room/style.css">
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
-    <script src="/meeting-room-script.js" defer></script> 
+    <script src="/join-room/script.js" defer></script> 
 
 
 </head>
 <body>
     
-    <button type="button" class="" onClick="createMeeting()">CreateMeeting</button>
-    <button type = "button" class = "" onClick="joinMeeting()">JoinMeeting</button>
-    <input type = "text" disabled = true id = "meetingUrl"></input>
+    <div class = "main_container">
+        <div class = "main_left">
+            <div id="video-grid">
+                
+            </div>
+            <div id = "video-controls">
+                <div class="video_controls_container">
+                    <div class="button_container main__video_button" onclick="playStop()">
+                        <i class="fas fa-video icon-center"></i>
+                    </div>
+                    <div class="button_container main__mute_button" onclick = "muteUnmute()">
+                        <i class="fas fa-microphone icon-center"></i>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+        <div class = "main_right">
+            <h3 style="color:white;"> Ready To join ? </h3>
+            <button type="button">Join Room</button>
+
+        </div>
+
+
+    </div>
 
 
 
