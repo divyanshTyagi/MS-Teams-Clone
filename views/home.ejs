@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="/socket.io/socket.io.js" defer></script>
   <!-- Bootstrap CSS -->
+  <script>
+    console.log("<%=roomIdGen()%>")
+  </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="./home/style.css">
   <script src="./home/script.js" defer></script>
@@ -85,7 +88,8 @@
           <button type="button"  data-toggle="modal" data-target="#edit_details_form_modal">
             Edit details
           </button>
-          <form action="/video-chat" method="POST">
+          <form action="/video-chat" method="GET">
+            <input type="hidden" name="roomId" value="<%=roomIdGen()%>">
             <button type="submit">New meeting</button>
           </form>
           <form action="/logout?_method=DELETE" method="POST">

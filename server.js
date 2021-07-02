@@ -69,7 +69,12 @@ mongoose.set("useCreateIndex", true);
   
 
 app.get('/', checkAuthenticated, (req, res) => {
-  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email,image : req.user.img})
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+  // res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+  // res.setHeader("Expires", "0"); // Proxies.
+  console.log('here');
+  console.log(req.user)
+  res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email,image : req.user.img,roomIdGen:function(){ return uuidV4()}})
 })
 
 
@@ -193,20 +198,24 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
-
-app.get('/join-room', (req, res) => {
-  res.render('join-room')
-})
-
-app.post('/video-chat', (req, res) => {
+app.get('/video-chat', checkAuthenticated,(req, res) => {
   // Create a brand new room and redirect the user there
-  res.redirect(`/video-chat?roomId=${uuidV4()}`);
+  console.log(req.query.roomId);
+  res.render('join-room',{roomId:req.query.roomId})
+})
+
+
+app.post('/video-chat',checkAuthenticated,(req,res)=>{
+  // console.log(req.user)
+  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
 })
 
 
 
 
-app.get('/video-chat', checkAuthenticated, (req, res) => {
+
+
+// app.get('/video-chat', checkAuthenticated, (req, res) => {
   // add the user to the list of users
   // RoomDetails.findOne({roomId: req.query.roomId}, function(err, room){
   //   if(err){
@@ -248,10 +257,10 @@ app.get('/video-chat', checkAuthenticated, (req, res) => {
   //   }
   // })
 
-  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
+//   res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
 
 
-})
+// })
 
 // Everytime someone connects to the server
 io.on('connection', socket => {

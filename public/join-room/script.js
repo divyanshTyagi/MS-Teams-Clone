@@ -1,5 +1,7 @@
 const videoGrid = document.getElementById('video-grid')
 const myVideo = document.createElement('video')
+let audio_bool = true;
+let video_bool = true;
 let myVideoStream;
 navigator.mediaDevices.getUserMedia({ // This is a promise
     video: true,
@@ -31,6 +33,7 @@ const muteUnmute = () => {
     setMuteButton();
     myVideoStream.getAudioTracks()[0].enabled = true;
     }
+    audio_bool = !audio_bool;
 }
 
 
@@ -61,6 +64,7 @@ const playStop = () => {
       setStopVideo()
       myVideoStream.getVideoTracks()[0].enabled = true;
     }
+    video_bool = !video_bool;
   }
   
   const setStopVideo = () => {
@@ -77,3 +81,7 @@ const playStop = () => {
     document.querySelector('.main__video_button').innerHTML = html;
   }
   
+
+  const submitForm = () => {
+    document.querySelector('form').submit
+  }
