@@ -3,6 +3,9 @@ const myVideo = document.createElement('video')
 let audio_bool = true;
 let video_bool = true;
 let myVideoStream;
+
+myVideo.muted = true
+
 navigator.mediaDevices.getUserMedia({ // This is a promise
     video: true,
     audio: true
@@ -83,5 +86,7 @@ const playStop = () => {
   
 
   const submitForm = () => {
+    document.querySelector('form').action += `&audio_bool=${audio_bool}&video_bool=${video_bool}`;
+    console.log(document.querySelector('form').action);
     document.querySelector('form').submit
   }

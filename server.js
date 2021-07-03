@@ -207,7 +207,7 @@ app.get('/video-chat', checkAuthenticated,(req, res) => {
 
 app.post('/video-chat',checkAuthenticated,(req,res)=>{
   // console.log(req.user)
-  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
+  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name,audio_bool:req.query.audio_bool, video_bool:req.query.video_bool});
 })
 
 

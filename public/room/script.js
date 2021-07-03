@@ -8,6 +8,9 @@ const myPeer = new Peer(undefined, {
 })
 
 
+VIDEO_BOOL =  (VIDEO_BOOL === "true");
+AUDIO_BOOL = (AUDIO_BOOL === "true");
+
 myVideo.muted = true
 
 const peers = {}
@@ -25,8 +28,22 @@ navigator.mediaDevices.getUserMedia({ // This is a promise
   video: true,
   audio: true
 }).then(stream => { // our stream  - (video + audio)
+
+  
+
   addVideoStream(myVideo, stream)
+
+
   myVideoStream = stream
+
+  if(VIDEO_BOOL == false){
+    playStop()
+  }
+  if(AUDIO_BOOL == false){
+    muteUnmute()
+  }
+
+
   socket.on('user-connected', (userId,CONNECTED_USER_NAME) => {
     //  The client will connect to the new user that has joined
     // We will send to the  userID our video stream, with whom we wish to connect
