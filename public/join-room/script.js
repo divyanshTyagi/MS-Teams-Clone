@@ -50,7 +50,7 @@ const setMuteButton = () => {
 
 const setUnmuteButton = () => {
     const html = `
-    <i class="unmute fas fa-microphone-slash"></i>
+    <i class="unmute fas fa-microphone-slash"  style = "color:red"></i>
     `
     document.querySelector('.main__mute_button').innerHTML = html;
 }
@@ -79,7 +79,7 @@ const playStop = () => {
   
   const setPlayVideo = () => {
     const html = `
-    <i class="stop fas fa-video-slash"></i>
+    <i class="stop fas fa-video-slash" style = "color:red"></i>
     `
     document.querySelector('.main__video_button').innerHTML = html;
   }

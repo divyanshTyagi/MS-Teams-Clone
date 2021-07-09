@@ -1,4 +1,4 @@
-// for development
+
 require('dotenv').config()
 const path = require('path')
 const express = require('express')
@@ -13,15 +13,22 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 var fs = require('fs');
+
+
 // Database
 const {User} = require('./models/userModel.js');
-const {RoomDetails} = require('./models/roomDetails.js');
-const {PeerId} = require('./models/peerId.js');
+
+dbname = "ms-teams";
+url = 'mongodb://localhost:27017/' + dbname;
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set("useCreateIndex", true);
+
 // Setting up rendering method of rooms
 app.set('view engine', 'ejs')
 
-const initializePassport = require("./passport-config.js");
 
+// initializing passport for authentication
+const initializePassport = require("./passport-config.js");
 initializePassport(passport);
 
 
@@ -46,10 +53,6 @@ var upload = multer({
 });
 
 // Authentication 
-
-
-
-
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
 app.use(session({
@@ -62,23 +65,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'))
 
-dbname = "ms-teams";
-url = 'mongodb://localhost:27017/' + dbname;
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.set("useCreateIndex", true);
-  
+
 
 app.get('/', checkAuthenticated, (req, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-  // res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-  // res.setHeader("Expires", "0"); // Proxies.
   console.log('here');
   console.log(req.user)
   res.render('home', { first_name: req.user.first_name,last_name : req.user.last_name ,email : req.user.email,image : req.user.img,roomIdGen:function(){ return uuidV4()}})
 })
 
 
-
+// Login
 app.get('/login', checkNotAuthenticated,(req, res) => {
   res.render('login')
 })
@@ -88,6 +85,8 @@ app.post('/login', checkNotAuthenticated,passport.authenticate('users', {
   failureRedirect: '/login',
   failureFlash: true
 }))
+
+// Signup
 
 app.get('/signup', checkNotAuthenticated, (req, res) => {
   res.render('signup')
@@ -149,6 +148,15 @@ app.post('/signup', checkNotAuthenticated, async (req, res) => {
 })
 
 
+// Routes for profile page
+
+/* Logout */
+app.delete('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
+/* Edit details  */
 app.post('/edit_details',upload.single('profile_photo'),(req,res) => {
 
   // we need to find the hashed password
@@ -177,10 +185,24 @@ app.post('/edit_details',upload.single('profile_photo'),(req,res) => {
   });
 })
 
-app.delete('/logout', (req, res) => {
-  req.logOut()
-  res.redirect('/login')
+
+
+
+// Routes for Room joining
+
+app.get('/video-chat', checkAuthenticated,(req, res) => {
+  console.log(req.query.roomId);
+  res.render('join-room',{roomId:req.query.roomId})
 })
+
+
+app.post('/video-chat',checkAuthenticated,(req,res)=>{
+  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name,audio_bool:req.query.audio_bool, video_bool:req.query.video_bool});
+})
+
+app.get('*', function(req, res) {
+  res.render("bad_route")
+});
 
 
 function checkAuthenticated(req, res, next) {
@@ -198,73 +220,11 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
-app.get('/video-chat', checkAuthenticated,(req, res) => {
-  // Create a brand new room and redirect the user there
-  console.log(req.query.roomId);
-  res.render('join-room',{roomId:req.query.roomId})
-})
-
-
-app.post('/video-chat',checkAuthenticated,(req,res)=>{
-  // console.log(req.user)
-  res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name,audio_bool:req.query.audio_bool, video_bool:req.query.video_bool});
-})
-
-
-
-
-
-
-// app.get('/video-chat', checkAuthenticated, (req, res) => {
-  // add the user to the list of users
-  // RoomDetails.findOne({roomId: req.query.roomId}, function(err, room){
-  //   if(err){
-  //     console.log(err);
-  //     return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
-  //   }else{
-  //     if(room == null){
-  //         // we will find that user
-  //         User.findOne({email : req.user.email}, function(err, user){
-  //             console.log(user);
-  //             currRoomDetails = {
-  //               "roomId" : req.query.roomId,
-  //               "participants" : [user]
-  //             }
-  //             newRoomDetails = new RoomDetails(currRoomDetails);
-  //             console.log(newRoomDetails);
-  //             newRoomDetails.save(function(err2){
-  //                 if(err2){
-  //                   console.log("Error at saving room details");
-  //                   console.log(err2);
-  //                   return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
-  //                 }
-  //                 return res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
-  //             })
-  //         })
-  //       }else{
-  //         User.findOne({email : req.user.email}, function(err, user){
-  //           console.log(user);
-  //           RoomDetails.findOneAndUpdate({roomId: req.query.roomId},{ $addToSet: { participants: [user] } },function(err,roomDetails){
-  //             if(err){
-  //               console.log("Error on adding new user to already existing room")
-  //               return res.render('home',{first_name : req.user.first_name,last_name : req.user.last_name, email : req.user.email});
-  //             }else{
-  //               return res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
-  //             }
-  //           })
-  //         })
-  //       }
-  //   }
-  // })
-
-//   res.render('room', { roomId: req.query.roomId ,userName : req.user.first_name});
-
-
-// })
+// Socket Functionality
 
 // Everytime someone connects to the server
 io.on('connection', socket => {
-  console.log("connected");
+  console.log("connected bbz");
   // When someone joins the room
   socket.on('join-room', (roomId, userId,userName) => {
     console.log("User joined " + roomId)
@@ -273,7 +233,7 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.broadcast.to(roomId).emit('user-connected', userId,userName );
 
-    // Messagin functionality
+    // Messaging functionality
     socket.on('message-sent', (res) => {
       console.log(res.userName);
       //send message to the same room
@@ -299,54 +259,12 @@ io.on('connection', socket => {
 
   }); 
 
-
-
-  // find friends functionality
-  socket.on('find_friend', (res) => {
-    console.log(res.friend_email);
-    User.findOne({email :  res.friend_email}).then((user) => {
-      
-      if(user== null){
-         socket.emit('found_friend',{status:false});
-      }else socket.emit('found_friend',{status:true});
-
-
-    });
-    
-  })
-
   // Create new meeting url
   socket.on('create-meeting-url',()=>{
     console.log("here");
     socket.emit('new-meeting-url-created',uuidV4());
   })
 
-  // USERNAMES 
-
-  socket.on('store_peer_id',(id,userName)=>{
-    console.log("STORING")
-    console.log(id, userName);
-    peerInfo = {
-      "userName" : userName,
-      "peerId" : id
-    }
-    peerInfoObj = new PeerId(peerInfo);
-    peerInfoObj.save(function(err2){
-      if(err2){
-        console.log(err2);
-      }
-    })
-  })
-
-  socket.on('get-user-name',(id) => {
-    console.log("get user name called for ", id );
-    PeerId.findOne({peerId : id}).then(userDetails=>{
-      console.log(userDetails);
-      socket.emit('take-user-name',userDetails.userName);
-
-    })
-
-  })
 
 })
 
