@@ -5,7 +5,7 @@ Netaji Subhas University of Technology
   
 Hosted at <a href = "https://tsuwa.azurewebsites.net">https://tsuwa.azurewebsites.net</a>  
 Presentation <a href = "https://docs.google.com/document/d/1UcFJ_Sq8n92-D-TVKz8MujfgDyBpPmkzRNXqT6__02A/edit">link</a>  
-Demo <a href = "https://youtu.be/aUMDg-ieirU">link</a>
+Demo <a href = "https://www.youtube.com/watch?v=Zxc7x6_xQps">link</a>
 
 ### Setup ( for windows ) 
 1. Clone the repository
