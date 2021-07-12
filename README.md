@@ -12,5 +12,5 @@ Demo <a href = "https://youtu.be/aUMDg-ieirU">link</a>
 2. Cd into the project directory and run `npm i` 
 3. Start the server using `nodemon server.js`
 4. install peerjs globally using `npm install peer -g`
-5. start the peerjs server using `peerjs --port 3031` ( refer <a href = "https://www.npmjs.com/package/peer"> This </a> for more details )
+5. start the peerjs server using `peerjs --port 3031` ( refer <a href = "https://www.npmjs.com/package/peer"> this </a> for more details )
 6. Go to <a href = "http://localhost:3030">localhost:3030</a> in your browser
