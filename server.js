@@ -224,7 +224,6 @@ function checkNotAuthenticated(req, res, next) {
 
 // Everytime someone connects to the server
 io.on('connection', socket => {
-  console.log("connected bbz");
   // When someone joins the room
   socket.on('join-room', (roomId, userId,userName) => {
     console.log("User joined " + roomId)
