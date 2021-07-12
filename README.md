@@ -1,13 +1,13 @@
 # MS Teams Clone
 Microsoft Engage 2021 Project  
-Divyansh Tyagi
+Divyansh Tyagi <br>
 Netaji Subhas University of Technology  
   
 Hosted at <a href = "https://tsuwa.azurewebsites.net">https://tsuwa.azurewebsites.net</a>  
 Presentation <a href = "https://docs.google.com/document/d/1UcFJ_Sq8n92-D-TVKz8MujfgDyBpPmkzRNXqT6__02A/edit">link</a>  
 Demo <a href = "https://youtu.be/aUMDg-ieirU">link</a>
 
-### Setup 
+### Setup ( for windows ) 
 1. Clone the repository
 2. Cd into the project directory and run `npm i` 
 3. Start the server using `nodemon server.js`
